@@ -1,14 +1,11 @@
 from datetime import datetime
 
-# https://docs.python.org/3/tutorial/controlflow.html
-# https://stackoverflow.com/questions/26002497/how-to-run-a-background-timer-in-python
-# https://www.programiz.com/python-programming/datetime/current-time
-
 def offerChoices(pumpState):
     if pumpState == "Y":
         print("Pump is on")
         startTime = datetime.now()
         print("current time is", startTime)
+         
 
     elif pumpState == "N":
         print("Pump is not on")
@@ -23,11 +20,28 @@ def offerChoices(pumpState):
             print("Pump is off")
             endTime = datetime.now()
             print("current time is", endTime)
-            print("Total time pump was on:", endTime-startTime)
+            runtime = endTime-startTime
+            print("Total time pump was on:", runtime, runtime.seconds)
+            writetofile(str(startTime) + "," + str(runtime.seconds))
+            readfile()
         else:
             print("Invalid Response")
 
+def writetofile(stringtowrite):
+    f = open("pumpcontent.txt", "a")
+    f.write(" %s\n" % stringtowrite)
+    f.close()
 
-isPumpOn = input("Is pump on? Y/N: ")
+def readfile():
+    f = open("pumpcontent.txt", "r")
+    print(f.read())
+    f.close()
 
-offerChoices(isPumpOn)
+while True:
+
+    isPumpOn = input("Is pump on? Y/N: ")
+
+    offerChoices(isPumpOn)
+
+
+
